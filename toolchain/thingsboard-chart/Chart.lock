@@ -1,0 +1,18 @@
+dependencies:
+- name: postgresql-ha
+  repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
+  version: 8.5.2
+- name: cassandra
+  repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
+  version: 9.1.8
+- name: kafka
+  repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
+  version: 15.3.4
+- name: redis
+  repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
+  version: 16.4.5
+- name: common
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 2.13.2
+digest: sha256:323786279a1088bbe3dd3c3bb2a6df84f6b74a46c9a7646fb27466344b04ed03
+generated: "2023-12-10T01:29:20.454396773Z"

@@ -1,0 +1,182 @@
+#
+# Copyright © 2016-2020 The Thingsboard Authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+apiVersion: apps/v1
+kind: {{ .Values.node.kind }}
+metadata:
+  name: {{ .Release.Name }}-node
+  labels:
+    tags.datadoghq.com/service: tb-node
+    tags.datadoghq.com/version: {{ .Values.global.image.tag }}
+    {{- include "thingsboard.labels" . | nindent 4 }}
+spec:
+  {{- $podLabels := include "thingsboard.selectorLabels-node" . }}
+{{- if not .Values.node.autoscaling.enabled }}
+  replicas: {{ .Values.node.replicaCount }}
+{{- end }}
+{{- if eq .Values.node.kind "StatefulSet" }}
+  serviceName: tb-node
+  podManagementPolicy: "Parallel"
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "thingsboard.selectorLabels-node" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.node.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+        admission.datadoghq.com/java-lib.version: latest
+    {{- end }}
+      labels:
+        tags.datadoghq.com/service: tb-node
+        tags.datadoghq.com/version: {{ .Values.global.image.tag }}
+        admission.datadoghq.com/enabled: "true"
+        {{- include "thingsboard.selectorLabels-node" . | nindent 8 }}
+    spec:
+      {{- with .Values.node.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "thingsboard.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.node.podSecurityContext | nindent 8 }}
+      initContainers:
+        {{- if (index .Values "postgresql-ha" "enabled") }}
+        - name: check-db-ready
+          image: postgres:{{ index .Values "postgresql-ha" "postgresqlImage" "tag" }}
+          command: ['sh', '-c',
+            'until pg_isready -h {{ include "thingsboard.pgpoolservicename" . }} -p {{ index .Values "postgresql-ha" "pgpool" "containerPort" }} -t {{ .Values.postgresInitDB.job.check.timeout }};
+            do echo waiting for database; sleep 2; done;']
+        - name: check-db-queue-ready
+          image: postgres:{{ index .Values "postgresql-ha" "postgresqlImage" "tag" }}
+          command: ['sh', '-c',
+            'export PGPASSWORD=''{{ index .Values "postgresql-ha" "postgresql" "password" }}'' && export row_count=0 && until [ $row_count -ge 3 ]; do sleep 1; row_count=$(psql -h {{ include "thingsboard.pgpoolservicename" . }} -p {{ index .Values "postgresql-ha" "pgpool" "containerPort" }} -U {{ index .Values "postgresql-ha" "postgresql" "username" }} -d {{ index .Values "postgresql-ha" "postgresql" "database" }} --set=on_error_stop=1 -t -c "SELECT count(*) FROM queue;"); done;']
+        {{- end  }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.node.securityContext | nindent 12 }}
+          image: "{{ .Values.node.image.server | default .Values.global.image.server }}/{{ .Values.node.image.repository }}:{{ .Values.node.image.tag | default .Values.global.image.tag }}"
+          imagePullPolicy: {{ .Values.node.image.pullPolicy | default .Values.global.image.pullPolicy}}
+          ports:
+          - containerPort: {{ .Values.node.port.http }}
+            name: http
+          - containerPort: {{ .Values.node.port.rpc }}
+            name: rpc
+          env:
+          - name: TB_SERVICE_ID
+            valueFrom:
+              fieldRef:
+                apiVersion: v1
+                fieldPath: metadata.name
+          - name: TB_SERVICE_TYPE
+            value: "monolith"
+          {{- if eq .Values.monitoring.enabled true }}
+          - name: METRICS_ENABLED
+            value: "true"
+          - name: METRICS_ENDPOINTS_EXPOSE
+            value: "prometheus"
+          {{- end }}
+          - name: TB_QUEUE_TYPE
+            value: "kafka"
+          - name: ZOOKEEPER_ENABLED
+            value: "true"
+          - name: ZOOKEEPER_URL
+            value: "{{ .Release.Name }}-zookeeper:{{ .Values.kafka.zookeeper.containerPorts.client }}"
+          - name: TB_KAFKA_SERVERS
+            value: "{{ .Release.Name }}-kafka:{{ .Values.kafka.service.ports.client }}"
+          - name: TB_QUEUE_KAFKA_REPLICATION_FACTOR
+            value: "{{ .Values.kafka.offsetsTopicReplicationFactor }}"
+          - name: JS_EVALUATOR
+            value: "remote"
+          - name: TRANSPORT_TYPE
+            value: "remote"
+          - name: HTTP_LOG_CONTROLLER_ERROR_STACK_TRACE
+            value: "false"
+          - name: CACHE_TYPE
+            value: "redis"
+          - name: REDIS_HOST
+            value: "{{ .Release.Name }}-redis-master"
+          - name: REDIS_PASSWORD
+            value: "{{ .Values.redis.auth.password }}"
+          - name: JWT_TOKEN_EXPIRATION_TIME
+            value: {{ .Values.node.authorization.tokenExpirationTimeSeconds | default 9000 | quote }}
+          - name: JWT_REFRESH_TOKEN_EXPIRATION_TIME
+            value: {{ .Values.node.authorization.refreshTokenExpirationTimeSeconds | default 604800 | quote }}
+          {{- range .Values.node.extraEnvVars }}
+          - name: {{ .key | upper }}
+            value: {{ .value | quote }}
+          {{- end }}
+          - name: DEFAULT_INACTIVITY_TIMEOUT
+            value: {{ .Values.node.state.defaultInactivityTimeoutInSec | default 600 | quote }}
+          - name: DD_SERVICE_MAPPING
+            value: "postgresql:thingsboard-postgres"
+          envFrom:
+          - configMapRef:
+              name: {{ .Release.Name }}-node-db-config
+          volumeMounts:
+            - mountPath: /config
+              name: {{ .Release.Name }}-node-config
+            - mountPath: /var/log/thingsboard
+              name: {{ .Release.Name }}-node-logs
+{{- if .Values.node.ruleChain.configmapName }}
+            - mountPath: /usr/share/thingsboard/data/json/tenant/rule_chains/root_rule_chain.json
+              subPath: root_rule_chain.json
+              name: {{ .Values.node.ruleChain.configmapName }}
+{{- end}}
+          readinessProbe:
+            httpGet:
+              path: /login
+              port: http
+            initialDelaySeconds: 15
+            timeoutSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /login
+              port: http
+            initialDelaySeconds: 360
+            timeoutSeconds: 10
+          resources:
+            {{- toYaml .Values.node.resources | nindent 12 }}
+      volumes:
+        - name: {{ .Release.Name }}-node-config
+          configMap:
+            name: {{ .Release.Name }}-node-config
+            items:
+            - key: conf
+              path:  thingsboard.conf
+            - key: logback
+              path:  logback.xml
+        - name: {{ .Release.Name }}-node-logs
+          emptyDir: {}
+{{- if .Values.node.ruleChain.configmapName }}
+        - name: {{ .Values.node.ruleChain.configmapName }}
+          configMap:
+            name: {{ .Values.node.ruleChain.configmapName }}
+            items:
+            - key: rule_chain
+              path: root_rule_chain.json
+{{- end}}
+      {{- with .Values.node.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- include "midokura.affinity" (dict "service" .Values.node "podLabels" $podLabels "context" $) | nindent 6 -}}
+      {{- with .Values.node.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

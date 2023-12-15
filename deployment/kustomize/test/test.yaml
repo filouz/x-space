@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test
+  namespace: {{NAMESPACE}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test
+  template:
+    metadata:
+      labels:
+        app: test
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+      - name: test
+        image: ghcr.io/filouz/nethops/client:local
+        command: ["/bin/sh", "-c", "while true; do sleep 1000; done"]
+        ports:
+        - name: test
+          containerPort: 1
+        

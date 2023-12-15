@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bridge
+  namespace: {{NAMESPACE}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bridge
+  template:
+    metadata:
+      labels:
+        app: bridge
+      annotations:
+        prometheus.io/scrape: 'true'
+        buildVersion: "{{ESPACE_BUILD_VERSION}}"
+    spec:
+      # nodeName: lab-in-example
+      initContainers:
+      - name: check-vpn
+        image: busybox:latest
+        command: 
+          - /bin/sh
+          - -c
+        args:
+          - |
+            until nslookup $(grep '^remote ' /ovpn/client.ovpn | awk '{print $2}'); do
+              echo 'waiting for VPN server'; 
+              sleep 2; 
+            done
+        volumeMounts:
+        - name: ovpn-client
+          mountPath: /ovpn/client.ovpn
+          subPath: client.ovpn
+      containers:
+      - name: nh-client
+        image: ghcr.io/filouz/nethops/client:local
+        securityContext:
+          privileged: true
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: ovpn-client
+          mountPath: /ovpn/client.ovpn
+          subPath: client.ovpn
+        - name: ovpn-client-pass
+          mountPath: /ovpn/client.pwd
+          subPath: client.pwd
+      - name: bridge
+        image: ghcr.io/filouz/espace/espace/cmd/bridge:local
+        imagePullPolicy: Always
+        env:
+        - name: http_proxy
+          value: http://192.168.255.1:3128
+        - name: https_proxy
+          value: http://192.168.255.1:3128
+      volumes:
+      - name: ovpn-client
+        secret:
+          secretName: ovpn-client
+      - name: ovpn-client-pass
+        secret:
+          secretName: ovpn-client-pass
+      imagePullSecrets:
+      - name: regcred

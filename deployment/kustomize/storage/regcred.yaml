@@ -1,0 +1,8 @@
+kind: Secret
+apiVersion: v1
+type: kubernetes.io/dockerconfigjson
+metadata:
+  namespace: {{NAMESPACE}}
+  name: regcred
+stringData:
+  .dockerconfigjson: '{"auths":{"ghcr.io":{"auth":"{{REGISTRY_AUTH}}"}}}'

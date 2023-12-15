@@ -1,0 +1,163 @@
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: lab-espace-pv
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+  hostPath:
+    path: "/u/flzpace/espace/library/espace"
+    type: DirectoryOrCreate
+
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: lab-espace-pvc
+  namespace: {{NAMESPACE}}
+spec:
+  volumeName: lab-espace-pv
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+
+
+################################################################################################
+################################################################################################
+
+--- 
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lab-espace
+  namespace: {{NAMESPACE}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lab-espace
+  template:
+    metadata:
+      labels:
+        app: lab-espace
+      annotations:
+        prometheus.io/scrape: 'true'
+        buildVersion: "{{ESPACE_BUILD_VERSION}}"
+    spec:
+      imagePullSecrets:
+      - name: regcred
+      containers:
+      - name: espace
+        image: ghcr.io/filouz/espace/espace:dev
+        imagePullPolicy: Always
+        workingDir: /library/espace
+        command: ["/bin/zsh", "-c", "while true; do sleep 1000; done"]
+        ports:
+        - containerPort: 9000
+        - containerPort: 3000
+        volumeMounts:
+        - name: espace
+          mountPath: /library/espace
+        env:
+        # - name: http_proxy
+        #   value: http://192.168.255.1:3128
+        # - name: https_proxy
+        #   value: http://192.168.255.1:3128
+        
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+              
+      - name: nethops
+        image: ghcr.io/filouz/nethops/client:local
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: ovpn-client
+          mountPath: /ovpn/client.ovpn
+          subPath: client.ovpn
+        - name: ovpn-client-pass
+          mountPath: /ovpn/client.pwd
+          subPath: client.pwd
+      volumes:
+      - name: ovpn-client
+        secret:
+          secretName: ovpn-client
+      - name: ovpn-client-pass
+        secret:
+          secretName: ovpn-client-pass
+      - name: espace
+        persistentVolumeClaim:
+          claimName: lab-espace-pvc
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: lab-espace-prom
+  namespace: {{NAMESPACE}}
+spec:
+  selector:
+    app: lab-espace
+  ports:
+    - protocol: TCP
+      port: 9000
+      targetPort: 9000
+      
+---
+
+##################
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: lab-espace-web
+  namespace: {{NAMESPACE}}
+spec:
+  selector:
+    app: lab-espace
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000  
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lab-espace-web
+  namespace: {{NAMESPACE}}
+spec:
+  rules:
+  - host: espace.{{LAB_DOMAIN_NAME}}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: lab-espace-web
+            port:
+              number: 3000
+
+

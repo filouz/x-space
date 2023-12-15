@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgba: 0, 0, 0, 0.87; /* Black text with slight transparency */
+  --background-color: 238, 238, 238; /* #eeeeee background */
+}
+
+@media (prefers-color-scheme: white) {
+  :root {
+    --foreground-rgba: 255, 255, 255, 0.87; /* White text with slight transparency for dark mode */
+    --background-color: 0, 0, 0; /* Dark background for dark mode */
+  }
+}
+
+body {
+  color: rgba(var(--foreground-rgba));
+  background-color: rgb(var(--background-color));
+}

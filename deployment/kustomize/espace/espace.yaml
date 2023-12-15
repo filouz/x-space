@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: espace
+  namespace: {{NAMESPACE}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: espace
+  template:
+    metadata:
+      labels:
+        app: espace
+      annotations:
+        prometheus.io/scrape: 'true'
+        buildVersion: "{{ESPACE_BUILD_VERSION}}"
+    spec:
+      containers:
+      - name: espace
+        image: ghcr.io/filouz/espace/espace/webapp:local
+        imagePullPolicy: Always
+      imagePullSecrets:
+      - name: regcred
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: espace
+  namespace: {{NAMESPACE}}
+spec:
+  ports:
+  - port: 3000
+    targetPort: 3000
+  selector:
+    app: espace
+
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: espace
+  namespace: {{NAMESPACE}}
+spec:
+  rules:
+  - host: next.{{PUBLIC_DOMAIN_NAME}}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: espace
+            port:
+              number: 3000
