@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Agent as HttpAgent } from 'http';
 import { Agent as HttpsAgent } from 'https';
 const HttpsProxyAgent = require('https-proxy-agent') as any;
-import config from './config'; // Adjust the import path as necessary
+import config from './config'; 
 
 function configureAxiosProxy(): void {
     const httpProxy = process.env.HTTP_PROXY || process.env.http_proxy;
