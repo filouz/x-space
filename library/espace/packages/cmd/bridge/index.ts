@@ -42,7 +42,7 @@ class BrokerClient {
             }
         });
 
-        if (config.messaging) {
+        if (config.messaging.enabled) {
             await this.messaging.pushMessage(JSON.stringify({
                 topic: config.thingsTopic, 
                 payload: JSON.parse(message.toString())
