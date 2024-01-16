@@ -69,7 +69,7 @@ strong_password
 Then execute:
 
 ```bash
-make install_base espace_deploy_services
+make install_ovpn install_base espace_deploy_services
 ```
 
 # Note

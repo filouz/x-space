@@ -1,0 +1,664 @@
+{
+    "title": "E-Space",
+    "image": null,
+    "mobileHide": false,
+    "mobileOrder": null,
+    "configuration": {
+      "description": "",
+      "widgets": {
+        "25271390-4b87-9848-5914-3924c654e9c5": {
+          "typeFullFqn": "system.charts.basic_timeseries",
+          "type": "timeseries",
+          "sizeX": 8,
+          "sizeY": 5,
+          "config": {
+            "datasources": [
+              {
+                "type": "device",
+                "name": "",
+                "deviceId": "afac6690-9716-11ee-9cbe-29fda9ebe589",
+                "dataKeys": [
+                  {
+                    "name": "active_power",
+                    "type": "timeseries",
+                    "label": "Active power",
+                    "color": "#F3D621",
+                    "settings": {
+                      "hideDataByDefault": false,
+                      "disableDataHiding": false,
+                      "removeFromLegend": false,
+                      "excludeFromStacking": false,
+                      "showLines": true,
+                      "lineWidth": 1,
+                      "fillLines": true,
+                      "fillLinesOpacity": 0.4,
+                      "showPoints": false,
+                      "tooltipValueFormatter": "",
+                      "showSeparateAxis": false,
+                      "axisTitle": "",
+                      "axisMin": null,
+                      "axisMax": null,
+                      "axisPosition": "left",
+                      "axisTickSize": null,
+                      "axisTickDecimals": null,
+                      "axisTicksFormatter": "",
+                      "comparisonSettings": {
+                        "showValuesForComparison": true,
+                        "comparisonValuesLabel": "",
+                        "color": ""
+                      },
+                      "thresholds": []
+                    },
+                    "_hash": 0.6234169947482928,
+                    "units": "W",
+                    "decimals": 0,
+                    "aggregationType": null,
+                    "funcBody": null,
+                    "usePostProcessing": null,
+                    "postFuncBody": null
+                  }
+                ],
+                "alarmFilterConfig": {
+                  "statusList": [
+                    "ACTIVE"
+                  ]
+                },
+                "latestDataKeys": null
+              }
+            ],
+            "timewindow": {
+              "hideInterval": false,
+              "hideLastInterval": false,
+              "hideQuickInterval": false,
+              "hideAggregation": false,
+              "hideAggInterval": false,
+              "hideTimezone": false,
+              "selectedTab": 0,
+              "realtime": {
+                "realtimeType": 0,
+                "timewindowMs": 3600000,
+                "quickInterval": "CURRENT_DAY",
+                "interval": 30000
+              },
+              "aggregation": {
+                "type": "AVG",
+                "limit": 25000
+              }
+            },
+            "showTitle": true,
+            "backgroundColor": "#fff",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "padding": "8px",
+            "settings": {
+              "stack": false,
+              "fontSize": 10,
+              "fontColor": "#545454",
+              "showTooltip": true,
+              "tooltipIndividual": false,
+              "tooltipCumulative": false,
+              "hideZeros": false,
+              "grid": {
+                "verticalLines": true,
+                "horizontalLines": true,
+                "outlineWidth": 1,
+                "color": "#545454",
+                "backgroundColor": null,
+                "tickColor": "#DDDDDD"
+              },
+              "xaxis": {
+                "title": null,
+                "showLabels": true,
+                "color": "#545454"
+              },
+              "yaxis": {
+                "min": null,
+                "max": null,
+                "title": null,
+                "showLabels": true,
+                "color": "#545454",
+                "tickSize": null,
+                "tickDecimals": 0,
+                "ticksFormatter": ""
+              },
+              "shadowSize": 4,
+              "smoothLines": false,
+              "comparisonEnabled": false,
+              "xaxisSecond": {
+                "axisPosition": "top",
+                "title": null,
+                "showLabels": true
+              },
+              "showLegend": true,
+              "legendConfig": {
+                "direction": "column",
+                "position": "bottom",
+                "sortDataKeys": false,
+                "showMin": false,
+                "showMax": false,
+                "showAvg": false,
+                "showTotal": false,
+                "showLatest": true
+              },
+              "customLegendEnabled": false
+            },
+            "title": "Switch: Active power",
+            "dropShadow": true,
+            "enableFullscreen": true,
+            "titleStyle": {
+              "fontSize": "16px",
+              "fontWeight": 400
+            },
+            "configMode": "basic",
+            "actions": {},
+            "showTitleIcon": true,
+            "titleIcon": "toggle_on",
+            "iconColor": "#D4DD1F",
+            "useDashboardTimewindow": true,
+            "displayTimewindow": false,
+            "titleFont": null,
+            "titleColor": null
+          },
+          "row": 0,
+          "col": 0,
+          "id": "25271390-4b87-9848-5914-3924c654e9c5"
+        },
+        "677e74c2-5009-eea4-ee55-eac3a455c970": {
+          "typeFullFqn": "system.charts.basic_timeseries",
+          "type": "timeseries",
+          "sizeX": 8,
+          "sizeY": 5,
+          "config": {
+            "datasources": [
+              {
+                "type": "device",
+                "name": "",
+                "deviceId": "92d98860-977d-11ee-9cbe-29fda9ebe589",
+                "dataKeys": [
+                  {
+                    "name": "duration",
+                    "type": "timeseries",
+                    "label": "Duration",
+                    "color": "#2196f3",
+                    "settings": {},
+                    "_hash": 0.46232022107224435,
+                    "units": "h",
+                    "decimals": 0,
+                    "aggregationType": null,
+                    "funcBody": null,
+                    "usePostProcessing": true,
+                    "postFuncBody": "return value / 3600;"
+                  }
+                ],
+                "alarmFilterConfig": {
+                  "statusList": [
+                    "ACTIVE"
+                  ]
+                },
+                "latestDataKeys": []
+              }
+            ],
+            "timewindow": {
+              "realtime": {
+                "timewindowMs": 60000
+              }
+            },
+            "showTitle": true,
+            "backgroundColor": "#fff",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "padding": "8px",
+            "settings": {
+              "stack": false,
+              "fontSize": 10,
+              "fontColor": "#545454",
+              "showTooltip": true,
+              "tooltipIndividual": false,
+              "tooltipCumulative": false,
+              "hideZeros": false,
+              "grid": {
+                "verticalLines": true,
+                "horizontalLines": true,
+                "outlineWidth": 1,
+                "color": "#545454",
+                "backgroundColor": null,
+                "tickColor": "#DDDDDD"
+              },
+              "xaxis": {
+                "title": null,
+                "showLabels": true,
+                "color": "#545454"
+              },
+              "yaxis": {
+                "min": null,
+                "max": null,
+                "title": null,
+                "showLabels": true,
+                "color": "#545454",
+                "tickSize": null,
+                "tickDecimals": 0,
+                "ticksFormatter": ""
+              },
+              "shadowSize": 4,
+              "smoothLines": false,
+              "comparisonEnabled": false,
+              "xaxisSecond": {
+                "axisPosition": "top",
+                "title": null,
+                "showLabels": true
+              },
+              "showLegend": true,
+              "legendConfig": {
+                "direction": "column",
+                "position": "bottom",
+                "sortDataKeys": false,
+                "showMin": false,
+                "showMax": false,
+                "showAvg": false,
+                "showTotal": false,
+                "showLatest": true
+              },
+              "customLegendEnabled": false
+            },
+            "title": "Activity Duration",
+            "dropShadow": true,
+            "enableFullscreen": true,
+            "titleStyle": {
+              "fontSize": "16px",
+              "fontWeight": 400
+            },
+            "configMode": "basic",
+            "actions": {},
+            "showTitleIcon": false,
+            "titleIcon": "thermostat",
+            "iconColor": "#1F6BDD",
+            "useDashboardTimewindow": true,
+            "displayTimewindow": true,
+            "titleFont": null,
+            "titleColor": null
+          },
+          "row": 0,
+          "col": 0,
+          "id": "677e74c2-5009-eea4-ee55-eac3a455c970"
+        },
+        "ad333c49-6df9-8e0d-c09d-7ce127cf2d78": {
+          "typeFullFqn": "system.maps_v2.openstreetmap",
+          "type": "latest",
+          "sizeX": 8.5,
+          "sizeY": 6,
+          "config": {
+            "datasources": [
+              {
+                "type": "entity",
+                "name": "",
+                "entityAliasId": "2c891757-ec1a-0af4-b97a-e024d9a8f08b",
+                "filterId": null,
+                "dataKeys": [
+                  {
+                    "name": "latitude",
+                    "type": "timeseries",
+                    "label": "latitude",
+                    "color": "#2196f3",
+                    "settings": {},
+                    "_hash": 0.7660507112974742
+                  },
+                  {
+                    "name": "longitude",
+                    "type": "timeseries",
+                    "label": "longitude",
+                    "color": "#4caf50",
+                    "settings": {},
+                    "_hash": 0.06830232205845399
+                  },
+                  {
+                    "name": "geo",
+                    "type": "timeseries",
+                    "label": "geo",
+                    "color": "#f44336",
+                    "settings": {},
+                    "_hash": 0.9232721784269169
+                  }
+                ],
+                "alarmFilterConfig": {
+                  "statusList": [
+                    "ACTIVE"
+                  ]
+                }
+              }
+            ],
+            "timewindow": {
+              "displayValue": "",
+              "selectedTab": 0,
+              "realtime": {
+                "realtimeType": 1,
+                "interval": 1000,
+                "timewindowMs": 60000,
+                "quickInterval": "CURRENT_DAY"
+              },
+              "history": {
+                "historyType": 0,
+                "interval": 1000,
+                "timewindowMs": 60000,
+                "fixedTimewindow": {
+                  "startTimeMs": 1702160389030,
+                  "endTimeMs": 1702246789030
+                },
+                "quickInterval": "CURRENT_DAY"
+              },
+              "aggregation": {
+                "type": "AVG",
+                "limit": 25000
+              }
+            },
+            "showTitle": true,
+            "backgroundColor": "#fff",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "padding": "8px",
+            "settings": {
+              "provider": "openstreet-map",
+              "gmApiKey": "AIzaSyDoEx2kaGz3PxwbI9T7ccTSg5xjdw8Nw8Q",
+              "gmDefaultMapType": "roadmap",
+              "mapProvider": "OpenStreetMap.Mapnik",
+              "useCustomProvider": false,
+              "customProviderTileUrl": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+              "mapProviderHere": "HERE.normalDay",
+              "credentials": {
+                "useV3": true,
+                "app_id": "AhM6TzD9ThyK78CT3ptx",
+                "app_code": "p6NPiITB3Vv0GMUFnkLOOg",
+                "apiKey": "kVXykxAfZ6LS4EbCTO02soFVfjA7HoBzNVVH9u7nzoE"
+              },
+              "mapImageUrl": "data:image/svg+xml;base64,PHN2ZyBpZD0ic3ZnMiIgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTAwIiB3aWR0aD0iMTAwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgdmlld0JveD0iMCAwIDEwMCAxMDAiPgogPGcgaWQ9ImxheWVyMSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAtOTUyLjM2KSI+CiAgPHJlY3QgaWQ9InJlY3Q0Njg0IiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBoZWlnaHQ9Ijk5LjAxIiB3aWR0aD0iOTkuMDEiIHN0cm9rZT0iIzAwMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiB5PSI5NTIuODYiIHg9Ii40OTUwNSIgc3Ryb2tlLXdpZHRoPSIuOTkwMTAiIGZpbGw9IiNlZWUiLz4KICA8dGV4dCBpZD0idGV4dDQ2ODYiIHN0eWxlPSJ3b3JkLXNwYWNpbmc6MHB4O2xldHRlci1zcGFjaW5nOjBweDt0ZXh0LWFuY2hvcjptaWRkbGU7dGV4dC1hbGlnbjpjZW50ZXIiIGZvbnQtd2VpZ2h0PSJib2xkIiB4bWw6c3BhY2U9InByZXNlcnZlIiBmb250LXNpemU9IjEwcHgiIGxpbmUtaGVpZ2h0PSIxMjUlIiB5PSI5NzAuNzI4MDkiIHg9IjQ5LjM5NjQ3NyIgZm9udC1mYW1pbHk9IlJvYm90byIgZmlsbD0iIzY2NjY2NiI+PHRzcGFuIGlkPSJ0c3BhbjQ2OTAiIHg9IjUwLjY0NjQ3NyIgeT0iOTcwLjcyODA5Ij5JbWFnZSBiYWNrZ3JvdW5kIDwvdHNwYW4+PHRzcGFuIGlkPSJ0c3BhbjQ2OTIiIHg9IjQ5LjM5NjQ3NyIgeT0iOTgzLjIyODA5Ij5pcyBub3QgY29uZmlndXJlZDwvdHNwYW4+PC90ZXh0PgogIDxyZWN0IGlkPSJyZWN0NDY5NCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgaGVpZ2h0PSIxOS4zNiIgd2lkdGg9IjY5LjM2IiBzdHJva2U9IiMwMDAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgeT0iOTkyLjY4IiB4PSIxNS4zMiIgc3Ryb2tlLXdpZHRoPSIuNjM5ODYiIGZpbGw9Im5vbmUiLz4KIDwvZz4KPC9zdmc+Cg==",
+              "imageEntityAlias": "",
+              "imageUrlAttribute": "",
+              "tmApiKey": "84d6d83e0e51e481e50454ccbe8986b",
+              "tmDefaultMapType": "roadmap",
+              "latKeyName": "latitude",
+              "lngKeyName": "longitude",
+              "xPosKeyName": "xPos",
+              "yPosKeyName": "yPos",
+              "defaultZoomLevel": null,
+              "defaultCenterPosition": "0,0",
+              "disableScrollZooming": false,
+              "disableDoubleClickZooming": false,
+              "disableZoomControl": false,
+              "fitMapBounds": true,
+              "useDefaultCenterPosition": false,
+              "mapPageSize": 16384,
+              "markerOffsetX": 0.5,
+              "markerOffsetY": 1,
+              "posFunction": "return {x: origXPos, y: origYPos};",
+              "draggableMarker": false,
+              "showLabel": true,
+              "useLabelFunction": false,
+              "label": "",
+              "labelFunction": null,
+              "showTooltip": true,
+              "showTooltipAction": "click",
+              "autocloseTooltip": true,
+              "useTooltipFunction": false,
+              "tooltipPattern": "<b>Address:</b> ${geo}<br/><br/><b>Latitude:</b> ${latitude:7}<br/><b>Longitude:</b> ${longitude:7}<br/>",
+              "tooltipFunction": null,
+              "tooltipOffsetX": 0,
+              "tooltipOffsetY": -1,
+              "color": "#fe7569",
+              "useColorFunction": false,
+              "colorFunction": null,
+              "useMarkerImageFunction": true,
+              "markerImage": null,
+              "markerImageSize": 34,
+              "markerImageFunction": "\nvar res = {\n    url: images[0],\n    size: 40\n}\nreturn res",
+              "markerImages": [
+                "data:image/png;base64,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IAGCDgAJEHQASICgA0ACBB0AEiDoAJAAQQeABAg6ACRA0AEgAYIOAAkQdABIgKADQAIEHQASIOgAkABBB4AECDoAJEDQASABgg4ACRB0AEiAoANAAgQdABIg6ACQAEEHgAQIOgAkQNABIAGCDgAJEHQASICgA0ACBB0AEiDoAJAAQQeABAg6ACRA0AEgAYIOAAkQdABIgKADQAIEHQASIOgAkABBB4AECDoAJEDQASABgg4ACRB0AEiAoANAAgQdABIg6ACQAEEHgAQIOgAkQNABIAGCDgAJEHQASICgA0ACBB0AEiDoAJAAQQeABAg6ACRA0AEgAYIOAAkQdABIgKADQAIEHQASIOgAkABBB4AECDoAJEDQASABgg4ACRB0AEiAoANAAgQdABIg6ACQAEEHgAQIOgAkQNABIAGCDgAJEHQASICgA0ACBB0AEiDoAJAAQQeABAg6ACRA0AEgAYIOAAkQdABIgKADQAIEHQASIOgAkABBB4AECDoAJEDQASABgg4ACRB0AEiAoANAAgQdABIg6ACQAEEHgAQIOgAkQNABIAGCDgAJEHQASICgA0ACBB0AEiDoAJAAQQeABAg6ACRA0AEgAYIOAAkQdABIgKADQAIEHQASIOgAkABBB4AECDoAJEDQASABgg4ACRB0AEiAoANAAgQdABIg6ACQAEEHgAQIOgAkQNABIAGCDgAJEHQASICgA0ACBB0AEiDoAJAAQQeABAg6ACRA0AEgAYIOAAkQdABIgKADQAIEHQASIOgAkABBB4AECDoAJEDQASABgg4ACRB0AEiAoANAAgQdABIg6ACQAEEHgAQIOgAkQNABIAGCDgAJEHQASICgA0ACBB0AEiDoAJAAQQeABAg6ACRA0AEgAYIOAAkQdABIgKADQAIEHQASIOgAkABBB4AECDoAJEDQASABgg4ACeiregP0hlqtVvUWoBL+26ddBJ22OH36dNVbAEiaS+4AkABBB4AECDoAJEDQASABgg4ACRB0AEiAoANAAgQdABIg6Czb97///aq3AD3lz/7sz6reAl1E0Fm2zZs3V70F6ClPPPFE1Vugiwg6yzY6OhrPPvts1duAnrBjx474/d///aq3QRcRdBqyZ8+eGBsbq3obkLQNGzbE3/3d31W9DbqMoNOwY8eOOVOHFtmxY0f867/+a9XboAtleZ5XvQeakGVZ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"
+              ],
+              "showPolygon": false,
+              "polygonKeyName": "perimeter",
+              "editablePolygon": false,
+              "showPolygonLabel": false,
+              "usePolygonLabelFunction": false,
+              "polygonLabel": "${entityName}",
+              "polygonLabelFunction": null,
+              "showPolygonTooltip": false,
+              "showPolygonTooltipAction": "click",
+              "autoClosePolygonTooltip": true,
+              "usePolygonTooltipFunction": false,
+              "polygonTooltipPattern": "<b>${entityName}</b><br/><br/><b>TimeStamp:</b> ${ts:7}",
+              "polygonTooltipFunction": null,
+              "polygonColor": "#3388ff",
+              "polygonOpacity": 0.2,
+              "usePolygonColorFunction": false,
+              "polygonColorFunction": null,
+              "polygonStrokeColor": "#3388ff",
+              "polygonStrokeOpacity": 1,
+              "polygonStrokeWeight": 3,
+              "usePolygonStrokeColorFunction": false,
+              "polygonStrokeColorFunction": null,
+              "showCircle": false,
+              "circleKeyName": "perimeter",
+              "editableCircle": false,
+              "showCircleLabel": false,
+              "useCircleLabelFunction": false,
+              "circleLabel": "${entityName}",
+              "circleLabelFunction": null,
+              "showCircleTooltip": false,
+              "showCircleTooltipAction": "click",
+              "autoCloseCircleTooltip": true,
+              "useCircleTooltipFunction": false,
+              "circleTooltipPattern": "<b>${entityName}</b><br/><br/><b>TimeStamp:</b> ${ts:7}",
+              "circleTooltipFunction": null,
+              "circleFillColor": "#3388ff",
+              "circleFillColorOpacity": 0.2,
+              "useCircleFillColorFunction": false,
+              "circleFillColorFunction": null,
+              "circleStrokeColor": "#3388ff",
+              "circleStrokeOpacity": 1,
+              "circleStrokeWeight": 3,
+              "useCircleStrokeColorFunction": false,
+              "circleStrokeColorFunction": null,
+              "useClusterMarkers": false,
+              "zoomOnClick": true,
+              "maxZoom": null,
+              "maxClusterRadius": 80,
+              "animate": true,
+              "spiderfyOnMaxZoom": false,
+              "showCoverageOnHover": true,
+              "chunkedLoading": false,
+              "removeOutsideVisibleBounds": true,
+              "useIconCreateFunction": false,
+              "clusterMarkerFunction": null
+            },
+            "title": "Phone",
+            "dropShadow": true,
+            "enableFullscreen": true,
+            "titleStyle": {
+              "fontSize": "16px",
+              "fontWeight": 400
+            },
+            "useDashboardTimewindow": true,
+            "showLegend": false,
+            "widgetStyle": {},
+            "actions": {},
+            "displayTimewindow": true,
+            "showTitleIcon": false,
+            "titleTooltip": "",
+            "widgetCss": "",
+            "pageSize": 1024,
+            "noDataDisplayMessage": ""
+          },
+          "row": 0,
+          "col": 0,
+          "id": "ad333c49-6df9-8e0d-c09d-7ce127cf2d78"
+        },
+        "295d15f8-3bf8-2284-f8d4-7f5941b35563": {
+          "typeFullFqn": "system.cards.markdown_card",
+          "type": "latest",
+          "sizeX": 5,
+          "sizeY": 3.5,
+          "config": {
+            "datasources": [
+              {
+                "type": "entity",
+                "name": "",
+                "entityAliasId": "2c891757-ec1a-0af4-b97a-e024d9a8f08b",
+                "dataKeys": [
+                  {
+                    "name": "geo",
+                    "type": "timeseries",
+                    "label": "geo",
+                    "color": "#2196f3",
+                    "settings": {},
+                    "_hash": 0.47702552063901593
+                  }
+                ],
+                "alarmFilterConfig": {
+                  "statusList": [
+                    "ACTIVE"
+                  ]
+                }
+              }
+            ],
+            "timewindow": {
+              "displayValue": "",
+              "selectedTab": 0,
+              "realtime": {
+                "realtimeType": 1,
+                "interval": 1000,
+                "timewindowMs": 60000,
+                "quickInterval": "CURRENT_DAY"
+              },
+              "history": {
+                "historyType": 0,
+                "interval": 1000,
+                "timewindowMs": 60000,
+                "fixedTimewindow": {
+                  "startTimeMs": 1702163689702,
+                  "endTimeMs": 1702250089702
+                },
+                "quickInterval": "CURRENT_DAY"
+              },
+              "aggregation": {
+                "type": "AVG",
+                "limit": 25000
+              }
+            },
+            "showTitle": false,
+            "backgroundColor": "#fff",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "padding": "0px",
+            "settings": {
+              "useMarkdownTextFunction": false,
+              "markdownTextPattern": "### Last known phone address\n\n**${geo}**",
+              "markdownTextFunction": "return '# Some title\\n - Entity name: ' + data[0]['entityName'];",
+              "applyDefaultMarkdownStyle": true,
+              "markdownCss": ""
+            },
+            "title": "Markdown/HTML Card",
+            "showTitleIcon": false,
+            "iconColor": "rgba(0, 0, 0, 0.87)",
+            "iconSize": "24px",
+            "titleTooltip": "",
+            "dropShadow": true,
+            "enableFullscreen": true,
+            "widgetStyle": {},
+            "titleStyle": {
+              "fontSize": "16px",
+              "fontWeight": 400
+            },
+            "showLegend": false,
+            "useDashboardTimewindow": true,
+            "displayTimewindow": true
+          },
+          "row": 0,
+          "col": 0,
+          "id": "295d15f8-3bf8-2284-f8d4-7f5941b35563"
+        }
+      },
+      "states": {
+        "default": {
+          "name": "Espace",
+          "root": true,
+          "layouts": {
+            "main": {
+              "widgets": {
+                "25271390-4b87-9848-5914-3924c654e9c5": {
+                  "sizeX": 12,
+                  "sizeY": 5,
+                  "row": 0,
+                  "col": 0
+                },
+                "677e74c2-5009-eea4-ee55-eac3a455c970": {
+                  "sizeX": 12,
+                  "sizeY": 5,
+                  "row": 0,
+                  "col": 12
+                },
+                "ad333c49-6df9-8e0d-c09d-7ce127cf2d78": {
+                  "sizeX": 12,
+                  "sizeY": 6,
+                  "row": 5,
+                  "col": 0
+                },
+                "295d15f8-3bf8-2284-f8d4-7f5941b35563": {
+                  "sizeX": 12,
+                  "sizeY": 3,
+                  "row": 5,
+                  "col": 12
+                }
+              },
+              "gridSettings": {
+                "backgroundColor": "#eeeeee",
+                "columns": 24,
+                "margin": 10,
+                "outerMargin": true,
+                "backgroundSizeMode": "100%"
+              }
+            }
+          }
+        }
+      },
+      "entityAliases": {
+        "2c891757-ec1a-0af4-b97a-e024d9a8f08b": {
+          "id": "2c891757-ec1a-0af4-b97a-e024d9a8f08b",
+          "alias": "device_phone",
+          "filter": {
+            "type": "singleEntity",
+            "resolveMultiple": false,
+            "singleEntity": {
+              "entityType": "DEVICE",
+              "id": "92d98860-977d-11ee-9cbe-29fda9ebe589"
+            }
+          }
+        }
+      },
+      "filters": {},
+      "timewindow": {
+        "hideInterval": false,
+        "hideLastInterval": false,
+        "hideQuickInterval": false,
+        "hideAggregation": false,
+        "hideAggInterval": false,
+        "hideTimezone": false,
+        "selectedTab": 0,
+        "realtime": {
+          "realtimeType": 0,
+          "timewindowMs": 300000,
+          "quickInterval": "CURRENT_DAY",
+          "interval": 1000
+        },
+        "aggregation": {
+          "type": "AVG",
+          "limit": 25000
+        },
+        "timezone": null
+      },
+      "settings": {
+        "stateControllerId": "entity",
+        "showTitle": false,
+        "showDashboardsSelect": true,
+        "showEntitiesSelect": true,
+        "showDashboardTimewindow": true,
+        "showDashboardExport": true,
+        "toolbarAlwaysOpen": true
+      }
+    },
+    "externalId": null,
+    "name": "E-Space"
+  }

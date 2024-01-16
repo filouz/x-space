@@ -49,11 +49,11 @@ spec:
       - name: bridge
         image: ghcr.io/filouz/espace/espace/cmd/bridge:local
         imagePullPolicy: Always
-        env:
-        - name: http_proxy
-          value: http://192.168.255.1:3128
-        - name: https_proxy
-          value: http://192.168.255.1:3128
+        # env:
+        # - name: http_proxy
+        #   value: http://192.168.255.1:3128
+        # - name: https_proxy
+        #   value: http://192.168.255.1:3128
       volumes:
       - name: ovpn-client
         secret:

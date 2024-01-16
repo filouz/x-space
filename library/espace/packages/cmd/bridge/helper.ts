@@ -1,8 +1,5 @@
 import axios from 'axios';
-import { Agent as HttpAgent } from 'http';
-import { Agent as HttpsAgent } from 'https';
-const HttpsProxyAgent = require('https-proxy-agent') as any;
-import config from './config'; 
+import config from './config';
 
 function configureAxiosProxy(): void {
     const httpProxy = process.env.HTTP_PROXY || process.env.http_proxy;
@@ -10,15 +7,39 @@ function configureAxiosProxy(): void {
 
     console.log("proxy.httpProxy", httpProxy);
     console.log("proxy.httpsProxy", httpsProxy);
-    
+
     if (httpProxy || httpsProxy) {
         console.log(`Configuring Axios with proxy: HTTP=${httpProxy}, HTTPS=${httpsProxy}`);
-        axios.defaults.proxy = false; // Disable default proxy
-        if (httpProxy) {
-            axios.defaults.httpAgent = new HttpsProxyAgent(httpProxy) as unknown as HttpAgent;
-        }
-        if (httpsProxy) {
-            axios.defaults.httpsAgent = new HttpsProxyAgent(httpsProxy) as unknown as HttpsAgent;
+
+        try {
+            const proxyUrlString = httpProxy || httpsProxy;
+            
+            if (!proxyUrlString) {
+                throw new Error('Proxy URL is undefined');
+            }
+
+            const proxyUrl = new URL(proxyUrlString);
+            const hostname = proxyUrl.hostname;
+            const port = parseInt(proxyUrl.port);
+
+            if (!hostname || isNaN(port) || port === 0) {
+                throw new Error('Invalid or missing hostname or port in proxy URL');
+            }
+
+            // Configure proxy settings in Axios
+            axios.defaults.proxy = {
+                host: hostname,
+                port: port,
+                protocol: proxyUrl.protocol
+            };
+            console.log(`proxy configured proxyUrl=${proxyUrl}`)
+
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error('Error configuring proxy:', error.message);
+            } else {
+                console.error('An unknown error occurred while configuring proxy');
+            }
         }
     } else {
         console.log('No proxy configuration found in environment variables.');
@@ -27,10 +48,10 @@ function configureAxiosProxy(): void {
 
 async function checkInternetConnectivity(): Promise<void> {
     configureAxiosProxy();
-
+    let max_retry = 10;
     while (true) {
         try {
-            const response = await axios.get('https://api.ipify.org');
+            const response = await axios.get("https://api.ipify.org");
             const ipAddress: string = response.data;
             console.log("ipAddress", ipAddress);
             if (ipAddress === config.homeIPAddress) { 
@@ -39,8 +60,13 @@ async function checkInternetConnectivity(): Promise<void> {
                 throw new Error('Invalid IP address');
             }
         } catch (error) {
-            console.error('No internet connectivity, retrying in 3 seconds...');
-            await new Promise<void>(resolve => setTimeout(resolve, 3000)); 
+            console.error(`VPN connection appears to be down, details: ${error}`)
+            console.log('retrying in 3 seconds...');
+            max_retry--;
+            if(max_retry == 0) {
+                process.exit(1);
+            }
+            await new Promise<void>(resolve => setTimeout(resolve, 3000));
         }
     }
 }

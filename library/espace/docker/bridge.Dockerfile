@@ -17,23 +17,18 @@ RUN git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git
 RUN sed -i 's/plugins=(/plugins=(zsh-autocomplete /g' /root/.zshrc
 
 
-# Set the working directory
 WORKDIR /app
 
-# Copy the global package.json and yarn.lock
 COPY package.json yarn.lock ./
 
-# Copy the workspace-specific package.json
 COPY packages/cmd/bridge/package.json packages/cmd/bridge/
 
-# Install dependencies
-RUN yarn install --frozen-lockfile --production
+RUN yarn workspace bridge install
 
-# Copy the application code
 COPY packages/cmd/bridge/ packages/cmd/bridge/
 
-# Set the working directory to the bridge microservice
 WORKDIR /app/packages/cmd/bridge
 
-# Run the app
-CMD ["node", "index.js"]
+RUN yarn build
+
+CMD ["yarn", "start"]

@@ -28,7 +28,7 @@ export default function Home() {
       try {
         const fetchedToken = await fetchToken();
         console.log("fetchedToken", fetchedToken)
-        connectWebSocket(`ws://things.espace.example.com/api/ws/plugins/telemetry?token=${fetchedToken}`)
+        connectWebSocket(`${String(process.env.THINGSBOARD_TELEMETRY)}${fetchedToken}`)
       } catch (error) {
         console.error('Error initializing data:', error);
       }

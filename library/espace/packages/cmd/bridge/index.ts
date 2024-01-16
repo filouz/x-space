@@ -60,7 +60,9 @@ class BrokerClient {
     await helper.checkInternetConnectivity();
 
     const messaging = new Messaging(config.messaging.rabbitmqURI, config.messaging.queueName);
-    await messaging.init();
+    if (config.messaging.enabled) {
+        await messaging.init();
+    }
 
     // Instantiate broker clients for different topics
     const homeClient = new BrokerClient(messaging, config.homeBrokerUrl);

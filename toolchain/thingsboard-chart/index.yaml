@@ -5,7 +5,7 @@ entries:
       category: Database
     apiVersion: v2
     appVersion: 4.0.3
-    created: "2023-12-15T20:51:20.247689796Z"
+    created: "2024-01-10T18:00:55.367978502Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -38,7 +38,7 @@ entries:
       licenses: Apache-2.0
     apiVersion: v2
     appVersion: 2.13.2
-    created: "2023-12-15T20:51:20.248843498Z"
+    created: "2024-01-10T18:00:55.36875941Z"
     description: A Library Helm Chart for grouping common logic between bitnami charts.
       This chart is not deployable by itself.
     digest: dd5454cdecdc05287e6fa2a4b5b4640655ba229684d786702b970b5156127d10
@@ -65,7 +65,7 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 3.1.0
-    created: "2023-12-15T20:51:20.255792979Z"
+    created: "2024-01-10T18:00:55.377738535Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -103,7 +103,7 @@ entries:
       category: Database
     apiVersion: v2
     appVersion: 11.15.0
-    created: "2023-12-15T20:51:20.259062472Z"
+    created: "2024-01-10T18:00:55.382763702Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -139,7 +139,7 @@ entries:
       category: Database
     apiVersion: v2
     appVersion: 6.2.6
-    created: "2023-12-15T20:51:20.264518113Z"
+    created: "2024-01-10T18:00:55.387973653Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -170,7 +170,7 @@ entries:
   thingsboard:
   - apiVersion: v2
     appVersion: 3.6.1
-    created: "2023-12-15T20:51:20.244020348Z"
+    created: "2024-01-10T18:00:55.365192103Z"
     dependencies:
     - condition: postgresql-ha.enabled
       name: postgresql-ha
@@ -190,7 +190,7 @@ entries:
       repository: oci://registry-1.docker.io/bitnamicharts
       version: 2.13.2
     description: A Helm chart for Thingsboard
-    digest: 2606c389830caafe63d83f392d9523cd5eaa6e11be791b1062843960419e8dad
+    digest: dc33fdd0594b9356c1be077aeed05d1a2da9a03840b042ba3594c3b8165ba981
     home: https://github.com/thingsboard/thingsboard-ce-k8s/
     icon: https://avatars.githubusercontent.com/u/24291394?s=200&v=4
     name: thingsboard
@@ -198,4 +198,4 @@ entries:
     urls:
     - thingsboard-0.1.3.tgz
     version: 0.1.3
-generated: "2023-12-15T20:51:20.221594151Z"
+generated: "2024-01-10T18:00:55.33968208Z"

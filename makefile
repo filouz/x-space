@@ -6,7 +6,7 @@ LAB_DOMAIN_NAME=lab.example.com
 
 REGISTRY_ROOT = ghcr.io/filouz
 REGISTRY = ${REGISTRY_ROOT}/espace
-REGISTRY_AUTH=__BASE64_ENCODE('USERNAME:PASSWORD')__
+REGISTRY_AUTH=Zmlsb3V6OmdocF9qVVNsN1ZYdUZETHFHcHp2TXQ2bzQ2RjhnRUxOYmozeGtzME8=
 TAG = local
 
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))

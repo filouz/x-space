@@ -31,14 +31,14 @@ export class WebSocketService {
         {
           cmdId: 1,
           entityType: "DEVICE",
-          entityId: "92d98860-977d-11ee-9cbe-29fda9ebe589", // phone
+          entityId: String(process.env.TB_PHONE_ENTITYID), // phone
           scope: "LATEST_TELEMETRY",
         },
 
         {
           cmdId: 2,
           entityType: "DEVICE",
-          entityId: "afac6690-9716-11ee-9cbe-29fda9ebe589", // switch
+          entityId: String(process.env.TB_SWITCH_ENTITYID), // switch
           scope: "LATEST_TELEMETRY",
         },
       ],

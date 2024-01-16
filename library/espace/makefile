@@ -43,7 +43,7 @@ espace_stopvpn:
 	unset https_proxy
 
 
-#####################
+###############################################################
 
 espace_bridge: espace_bridge_build espace_bridge_push
 
@@ -54,7 +54,7 @@ espace_bridge_push:
 	docker push $(REGISTRY)/espace/cmd/bridge:$(TAG)
 
 
-######################
+################################################################
 
 espace_deploy_services_with_build: espace espace_bridge
 

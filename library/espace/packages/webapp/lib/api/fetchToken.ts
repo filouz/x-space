@@ -6,8 +6,8 @@ interface TokenResponse {
 
 export const fetchToken = async (): Promise<string> => {
   try {
-    const response = await axios.post<TokenResponse>('http://things.espace.example.com/api/auth/login/public', {
-      "publicId" : "dd439990-97af-11ee-9cbe-29fda9ebe589"
+    const response = await axios.post<TokenResponse>(String(process.env.TB_PUBLIC_ENDPOINT), {
+      "publicId" : String(process.env.TB_PUBLIC_TOKEN)
     });
     return response.data.token;
   } catch (error) {

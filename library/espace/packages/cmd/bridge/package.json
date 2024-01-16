@@ -4,21 +4,23 @@
   "description": "A suite of standalone microservices for the Espace ecosystem, providing modular and scalable functionality.",
   "scripts": {
     "dev": "nodemon index.ts",
-    "start": "tsc && node ./build/index.js"
+    "build": "tsc",
+    "start": "node ./build/index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "amqplib": "^0.10.3",
     "axios": "^1.6.2",
-    "https-proxy-agent": "^7.0.2",
-    "mqtt": "^5.3.3"
+    "mqtt": "^5.3.3",
+    "https-proxy-agent": "^7.0.2"
   },
   "devDependencies": {
     "@types/amqplib": "^0.10.4",
     "@types/mqtt": "^2.5.0",
     "@types/node": "^20.10.4",
     "nodemon": "^3.0.2",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "typescript": "^5"
   }
 }
